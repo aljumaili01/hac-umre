@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container">
+      <h1 class="h1">{{ t('guide_title') }}</h1>
+      <p class="lead">{{ t('guide_subtitle') }}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="prose">
+        {% if locale == 'en' %}
+          <h2>Umrah (Step-by-step)</h2>
+          <h3>1) Ihram</h3>
+          <ul>
+            <li>Make intention (niyyah) for Umrah and enter the state of ihram at the miqat.</li>
+            <li>Men: wear two white unstitched garments. Women: modest dress (no specific color).</li>
+            <li>Recite the Talbiyah: “Labbayka Allahumma labbayk…” until you begin Tawaf.</li>
+          </ul>
+          <h3>2) Tawaf</h3>
+          <ul>
+            <li>Circle the Kaaba seven times, starting from the Black Stone side.</li>
+            <li>Maintain calmness, avoid pushing, and keep your heart present in du’a and dhikr.</li>
+          </ul>
+          <h3>3) Sa’i</h3>
+          <ul>
+            <li>Walk seven trips between Safa and Marwah.</li>
+            <li>Remember Hajar’s perseverance and place your trust in Allah.</li>
+          </ul>
+          <h3>4) Halq / Taqsir</h3>
+          <ul>
+            <li>Men: shave (halq) or shorten (taqsir) the hair. Women: trim a small portion.</li>
+            <li>With this, Umrah is completed and you exit ihram.</li>
+          </ul>
+
+          <h2>Hajj (Chronological guide)</h2>
+          <h3>Day of Tarwiyah (8th Dhul-Hijjah)</h3>
+          <ul>
+            <li>Enter ihram for Hajj and proceed to Mina; pray and rest there.</li>
+          </ul>
+          <h3>Day of Arafah (9th)</h3>
+          <ul>
+            <li>Stand at Arafah from noon to sunset; this is the heart of Hajj.</li>
+            <li>Increase du’a, repentance, and remembrance.</li>
+          </ul>
+          <h3>Muzdalifah (Night of 9th)</h3>
+          <ul>
+            <li>After sunset, go to Muzdalifah, pray, rest, and collect pebbles.</li>
+          </ul>
+          <h3>Stoning the Jamarat (10th and following days)</h3>
+          <ul>
+            <li>Stone Jamrat al-‘Aqabah on the 10th; on subsequent days stone the three Jamarat.</li>
+            <li>Focus on humility and avoiding harm to others.</li>
+          </ul>
+          <h3>Sacrifice</h3>
+          <ul>
+            <li>Offer the sacrifice (for those required) as part of completing the rites.</li>
+          </ul>
+          <h3>Tawaf al-Ifadah</h3>
+          <ul>
+            <li>Perform Tawaf al-Ifadah in Makkah; then Sa’i (if required for your Hajj type).</li>
+          </ul>
+          <h3>Farewell Tawaf (Tawaf al-Wada’)</h3>
+          <ul>
+            <li>Before leaving Makkah, perform the farewell tawaf.</li>
+          </ul>
+        {% elif locale == 'ku' %}
+          <h2>عومرە (هەنگاو بە هەنگاو)</h2>
+          <h3>١) ئیحرام</h3>
+          <ul>
+            <li>نیەت بۆ عومرە بکە و لە میقاتدا دەست بە ئیحرام بکە.</li>
+            <li>پیاوان: دوو پارچە ڕەشەنەکراوی سپی. ژنان: جل و بەرگی مۆدیست (ڕەنگی دیاریکراو نییە).</li>
+            <li>تەلبیە بڵێ: «لبّیک اللهم لبّیک…» تا دەست بە طواف دەکەیت.</li>
+          </ul>
+          <h3>٢) طواف</h3>
+          <ul>
+            <li>٧ جار دەورەی کەعبە بکە، لە لاوەی حەجەرە ئەسوەد دەستپێبکە.</li>
+            <li>بە هێواشی و ڕێزەوە، بە دووعا و ذکری دلەوە بەمێنە.</li>
+          </ul>
+          <h3>٣) سەعی</h3>
+          <ul>
+            <li>٧ جار لە نێوان سەفا و مەروە بڕۆ و بگەڕێوە.</li>
+            <li>بیر لە خۆڕاگریی هاجەر بکە و پشت بە خوای گەورە ببەستە.</li>
+          </ul>
+          <h3>٤) حلق / تەقصیر</h3>
+          <ul>
+            <li>پیاوان: سەر تراشین (حلق) یان کەمکردن (تەقصیر). ژنان: کەمێک لە قژیان ببڕن.</li>
+            <li>بەمەوە عومرە تەواو دەبێت و لە ئیحرام دەردەچیت.</li>
+          </ul>
+
+          <h2>حەج (ڕێنمایی بە پێی کات)</h2>
+          <h3>ڕۆژی تروویە (٨ی ذوالحجە)</h3>
+          <ul>
+            <li>ئیحرام بۆ حەج بکە و بڕۆ بۆ مینا؛ نوێژ بکە و لێرە دەمبەستە.</li>
+          </ul>
+          <h3>ڕۆژی عەرفە (٩ی)</h3>
+          <ul>
+            <li>لە نیوەڕۆ تا خۆرئاوابوون لە عەرفات وەستە؛ ئەمە دڵی حەجە.</li>
+            <li>دووعا، تۆبە، و ذکری زۆر بکە.</li>
+          </ul>
+          <h3>موزدەلیفە (شەوی ٩ی)</h3>
+          <ul>
+            <li>دوای خۆرئاوابوون بڕۆ بۆ موزدەلیفە، نوێژ بکە، دەمبەستە و بەردەکان کۆ بکەوە.</li>
+          </ul>
+          <h3>ڕەمی جەمەرات (١٠ و ڕۆژەکانی دواتر)</h3>
+          <ul>
+            <li>لە ١٠یەمدا جەمڕەتی عەقەبە ڕەم بکە؛ لە ڕۆژەکانی دواتردا سێ جەمڕەت ڕەم بکە.</li>
+            <li>ڕێز بگرە و زیان بە کەسان مەگەیەنە.</li>
+          </ul>
+          <h3>قوربانی</h3>
+          <ul>
+            <li>ئەگەر پێویست بوو، قوربانی ئەنجام بدە بۆ تەواوکردنی مناسکەکان.</li>
+          </ul>
+          <h3>طواف الإفاضة</h3>
+          <ul>
+            <li>لە مەککە طواف الإفاضة بکە؛ پاشان سەعی (ئەگەر بەپێی جۆری حەجەکەت پێویست بوو).</li>
+          </ul>
+          <h3>طواف الوداع</h3>
+          <ul>
+            <li>پێش جێهێشتنی مەککە، طواف الوداع بکە.</li>
+          </ul>
+        {% else %}
+          <h2>العمرة (خطوة بخطوة)</h2>
+          <h3>١) الإحرام</h3>
+          <ul>
+            <li>النية للعمرة والدخول في الإحرام من الميقات.</li>
+            <li>الرجال: لباس الإحرام قطعتان بيضاوان. النساء: لباس محتشم (لا لون محدد).</li>
+            <li>الإكثار من التلبية: «لبيك اللهم لبيك…» حتى بدء الطواف.</li>
+          </ul>
+          <h3>٢) الطواف</h3>
+          <ul>
+            <li>الطواف حول الكعبة ٧ أشواط بدءاً من جهة الحجر الأسود.</li>
+            <li>الهدوء وعدم المزاحمة مع حضور القلب في الدعاء والذكر.</li>
+          </ul>
+          <h3>٣) السعي</h3>
+          <ul>
+            <li>السعي بين الصفا والمروة ٧ مرات.</li>
+            <li>استحضار قصة هاجر والتوكل على الله.</li>
+          </ul>
+          <h3>٤) الحلق / التقصير</h3>
+          <ul>
+            <li>الرجال: حلق أو تقصير. النساء: قص مقدار يسير من الشعر.</li>
+            <li>وبذلك تتم العمرة وتخرج من الإحرام.</li>
+          </ul>
+
+          <h2>الحج (دليل زمني)</h2>
+          <h3>يوم التروية (٨ ذو الحجة)</h3>
+          <ul>
+            <li>الإحرام للحج والتوجه إلى منى والمبيت فيها.</li>
+          </ul>
+          <h3>يوم عرفة (٩)</h3>
+          <ul>
+            <li>الوقوف بعرفة من الظهر إلى الغروب وهو ركن الحج الأعظم.</li>
+            <li>الإكثار من الدعاء والتوبة والذكر.</li>
+          </ul>
+          <h3>مزدلفة (ليلة ٩)</h3>
+          <ul>
+            <li>بعد الغروب التوجه إلى مزدلفة للصلاة والمبيت وجمع الحصى.</li>
+          </ul>
+          <h3>رمي الجمرات (١٠ وما بعده)</h3>
+          <ul>
+            <li>رمي جمرة العقبة يوم ١٠، ثم رمي الجمرات الثلاث في الأيام التالية.</li>
+            <li>الحرص على السلامة وعدم أذية الآخرين.</li>
+          </ul>
+          <h3>الذبح (الهدي)</h3>
+          <ul>
+            <li>ذبح الهدي لمن وجب عليه ضمن إتمام المناسك.</li>
+          </ul>
+          <h3>طواف الإفاضة</h3>
+          <ul>
+            <li>طواف الإفاضة في مكة، ثم السعي إن لزم حسب نوع الحج.</li>
+          </ul>
+          <h3>طواف الوداع</h3>
+          <ul>
+            <li>قبل مغادرة مكة يُؤدى طواف الوداع.</li>
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

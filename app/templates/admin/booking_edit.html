@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{{ t('booking_edit') }} #{{ booking.id }}</h1>
+        <p class="lead">{{ booking.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-ghost" href="{{ url_for('admin.booking_view', booking_id=booking.id) }}">{{ t('booking_view') }}</a>
+        <a class="btn btn-ghost" href="{{ url_for('admin.bookings_list') }}">{{ t('admin_bookings') }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="form-shell">
+        <form class="form" method="post">
+          <div class="form-grid">
+            <div class="field">
+              <label class="label" for="package_id">{{ t('form_package') }}</label>
+              <select class="control" id="package_id" name="package_id">
+                {% for p in packages %}
+                  <option value="{{ p.id }}" {% if booking.package_id == p.id %}selected{% endif %}>{{ p.slug }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="label" for="status">{{ t('table_status') }}</label>
+              <select class="control" id="status" name="status">
+                <option value="pending" {% if booking.normalized_status == 'pending' %}selected{% endif %}>{{ t('status_pending') }}</option>
+                <option value="approved" {% if booking.normalized_status == 'approved' %}selected{% endif %}>{{ t('status_approved') }}</option>
+                <option value="rejected" {% if booking.normalized_status == 'rejected' %}selected{% endif %}>{{ t('status_rejected') }}</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="label" for="full_name">{{ t('form_full_name') }}</label>
+              <input class="control" id="full_name" name="full_name" required value="{{ booking.full_name }}" />
+            </div>
+
+            <div class="field">
+              <label class="label" for="passport_number">{{ t('form_passport') }}</label>
+              <input class="control" id="passport_number" name="passport_number" required value="{{ booking.passport_number }}" />
+            </div>
+
+            <div class="field">
+              <label class="label" for="phone">{{ t('form_phone') }}</label>
+              <input class="control" id="phone" name="phone" required value="{{ booking.phone }}" />
+            </div>
+
+            <div class="field">
+              <label class="label" for="people_count">{{ t('form_people') }}</label>
+              <input class="control" type="number" id="people_count" name="people_count" min="1" max="50" required value="{{ booking.people_count }}" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{{ t('save_changes') }}</button>
+            <a class="btn btn-ghost" href="{{ url_for('admin.booking_view', booking_id=booking.id) }}">{{ t('booking_view') }}</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

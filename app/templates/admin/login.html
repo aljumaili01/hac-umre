@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container">
+      <h1 class="h1">{{ t('admin_login_title') }}</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="form-shell form-shell-sm">
+        <form class="form" method="post" action="{{ url_for('admin.login') }}">
+          <div class="field">
+            <label class="label" for="username">{{ t('admin_username') }}</label>
+            <input class="control" id="username" name="username" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label class="label" for="password">{{ t('admin_password') }}</label>
+            <input class="control" id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{{ t('admin_login') }}</button>
+            <a class="btn btn-ghost" href="{{ url_for('public.home') }}">{{ t('nav_home') }}</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

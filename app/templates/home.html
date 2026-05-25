@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="kicker">{{ content('hero_kicker') }}</div>
+        <h1 class="h1">{{ content('hero_title') }}</h1>
+        <p class="lead">{{ content('hero_subtitle') }}</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="{{ url_for('public.packages') }}">{{ t('cta_view_packages') }}</a>
+          <a class="btn btn-ghost" href="{{ url_for('public.booking') }}">{{ t('cta_book_now') }}</a>
+        </div>
+        <div class="hero-badges">
+          <div class="badge">{{ content('hero_badge_cities') }}</div>
+          <div class="badge">{{ content('hero_badge_services') }}</div>
+          <div class="badge">{{ content('hero_badge_support') }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="h2">{{ content('section_featured') }}</h2>
+        <a class="link" href="{{ url_for('public.packages') }}">{{ t('nav_packages') }}</a>
+      </div>
+      <div class="cards">
+        {% for p in packages %}
+          {% set lp = p.localized(locale) %}
+          <article class="card">
+            <div class="card-top">
+              <div class="card-title">{{ lp.title }}</div>
+              <div class="pill">{{ p.duration_days }}d</div>
+            </div>
+            <div class="card-desc">{{ lp.description }}</div>
+            <div class="card-meta">
+              <div class="meta-row">
+                <div class="meta-label">{{ t('label_hotels') }}</div>
+                <div class="meta-value">{{ p.hotels }}</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-label">{{ t('table_amount') }}</div>
+                <div class="meta-value">{{ "%.2f"|format(p.price_per_person|float) }} {{ p.currency }}</div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-primary" href="{{ url_for('public.booking', package=p.slug) }}">{{ t('cta_book_now') }}</a>
+              <a class="btn btn-ghost" href="{{ url_for('public.packages') }}">{{ t('cta_view_packages') }}</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% if articles %}
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="h2">{{ content('section_articles') }}</h2>
+          <a class="link" href="{{ url_for('public.articles_list') }}">{{ t('cta_view_all') }}</a>
+        </div>
+        <div class="cards">
+          {% for a in articles %}
+            {% set la = a.localized(locale) %}
+            <article class="card">
+              {% if a.image_url %}
+                <img class="card-img" src="{{ a.image_url }}" alt="" />
+              {% else %}
+                <div class="card-img card-img-placeholder" aria-hidden="true"></div>
+              {% endif %}
+              <div class="card-top">
+                <div class="card-title">{{ la.title }}</div>
+              </div>
+              <div class="card-desc">
+                {{ la.content[:160] }}{% if la.content|length > 160 %}…{% endif %}
+              </div>
+              <div class="card-actions">
+                <a class="btn btn-primary" href="{{ url_for('public.article_detail', article_id=a.id) }}">{{ t('cta_read_more') }}</a>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="section section-muted">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="h2">{{ content('section_testimonials') }}</h2>
+      </div>
+      <div class="testimonials">
+        <figure class="quote">
+          <blockquote>“{{ t('testi_1_quote') }}”</blockquote>
+          <figcaption>— {{ t('testi_1_name') }}</figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“{{ t('testi_2_quote') }}”</blockquote>
+          <figcaption>— {{ t('testi_2_name') }}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+{% endblock %}

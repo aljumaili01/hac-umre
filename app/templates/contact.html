@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container">
+      <h1 class="h1">{{ t('contact_title') }}</h1>
+      <p class="lead">{{ t('contact_subtitle') }}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">{{ t('direct_whatsapp_title') }}</div>
+          <div class="muted">{{ t('direct_whatsapp_subtitle') }}</div>
+          <div class="form-actions">
+            {% if whatsapp_url %}
+              <a class="btn btn-primary btn-whatsapp" href="{{ whatsapp_url }}" target="_blank" rel="noopener">{{ t('direct_whatsapp_button') }}</a>
+            {% else %}
+              <div class="muted">{{ t('whatsapp_not_configured') }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">{{ t('contact_details') }}</div>
+
+          {% if contact_settings.get('phone') %}
+            <div class="panel-title">{{ t('contact_phone') }}</div>
+            <div class="panel-value">{{ contact_settings.get('phone') }}</div>
+          {% endif %}
+
+          {% if contact_settings.get('phone2') %}
+            <div class="panel-title">{{ t('contact_phone_alt') }}</div>
+            <div class="panel-value">{{ contact_settings.get('phone2') }}</div>
+          {% endif %}
+
+          {% if whatsapp_url %}
+            <div class="panel-title">{{ t('contact_whatsapp_label') }}</div>
+            <div class="panel-value">
+              <a class="link" href="{{ whatsapp_url }}" target="_blank" rel="noopener">{{ t('contact_whatsapp') }}</a>
+            </div>
+          {% endif %}
+
+          {% if contact_settings.get('email') %}
+            <div class="panel-title">{{ t('contact_email') }}</div>
+            <div class="panel-value">{{ contact_settings.get('email') }}</div>
+          {% endif %}
+
+          {% if contact_address %}
+            <div class="panel-title">{{ t('contact_address') }}</div>
+            <div class="panel-value">{{ contact_address }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

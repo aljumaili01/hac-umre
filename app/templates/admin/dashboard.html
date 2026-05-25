@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{{ t('admin_dashboard') }}</h1>
+        <p class="lead">{{ t('admin_dashboard_help') }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-ghost" href="{{ url_for('admin.packages_list') }}">{{ t('admin_packages') }}</a>
+        <a class="btn btn-ghost" href="{{ url_for('admin.bookings_list') }}">{{ t('admin_bookings') }}</a>
+        <a class="btn btn-ghost" href="{{ url_for('admin.content_management') }}">{{ t('admin_content') }}</a>
+        <a class="btn btn-primary" href="{{ url_for('admin.logout') }}">{{ t('admin_logout') }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">{{ t('stats_total_bookings') }}</div>
+          <div class="stat-value">{{ total_bookings }}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">{{ t('stats_pending') }}</div>
+          <div class="stat-value">{{ pending_bookings }}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">{{ t('stats_revenue') }}</div>
+          <div class="stat-value">{{ "%.2f"|format(revenue) }}</div>
+        </div>
+      </div>
+
+      <div class="table-shell">
+        <div class="table-head">
+          <div class="h3">{{ t('admin_bookings') }}</div>
+          <a class="link" href="{{ url_for('admin.bookings_list') }}">{{ t('booking_view') }}</a>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>{{ t('form_full_name') }}</th>
+              <th>{{ t('form_package') }}</th>
+              <th>{{ t('table_status') }}</th>
+              <th>{{ t('table_created') }}</th>
+              <th>{{ t('table_actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for b in latest_bookings %}
+              <tr>
+                <td>#{{ b.id }}</td>
+                <td>{{ b.full_name }}</td>
+                <td>{{ b.package.slug }}</td>
+                <td><span class="status status-{{ b.normalized_status }}">{{ t('status_' ~ b.normalized_status) }}</span></td>
+                <td>{{ b.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+                <td class="actions">
+                  <a class="link" href="{{ url_for('admin.booking_view', booking_id=b.id) }}">{{ t('booking_view') }}</a>
+                  <a class="link" href="{{ url_for('admin.booking_edit', booking_id=b.id) }}">{{ t('booking_edit') }}</a>
+                  <form method="post" action="{{ url_for('admin.booking_update_status', booking_id=b.id) }}" class="inline">
+                    <input type="hidden" name="status" value="approved" />
+                    <button class="status status-approved" type="submit">{{ t('action_approve') }}</button>
+                  </form>
+                  <form method="post" action="{{ url_for('admin.booking_update_status', booking_id=b.id) }}" class="inline">
+                    <input type="hidden" name="status" value="rejected" />
+                    <button class="status status-rejected" type="submit">{{ t('action_reject') }}</button>
+                  </form>
+                  <form method="post" action="{{ url_for('admin.booking_update_status', booking_id=b.id) }}" class="inline">
+                    <input type="hidden" name="status" value="pending" />
+                    <button class="status status-pending" type="submit">{{ t('action_set_pending') }}</button>
+                  </form>
+                  <form method="post" action="{{ url_for('admin.booking_delete', booking_id=b.id) }}" class="inline" onsubmit="return confirm('{{ t('confirm_delete') }}');">
+                    <button class="link danger" type="submit">{{ t('booking_delete') }}</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}

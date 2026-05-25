@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container">
+      <h1 class="h1">{{ t('about_title') }}</h1>
+      <p class="lead">{{ t('about_subtitle') }}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">{{ t('about_mission_title') }}</div>
+          <div class="muted">{{ t('about_mission_body') }}</div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">{{ t('about_vision_title') }}</div>
+          <div class="muted">{{ t('about_vision_body') }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="h2">{{ t('about_values_title') }}</h2>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-title">{{ t('about_value_1_title') }}</div>
+          <div class="card-desc">{{ t('about_value_1_body') }}</div>
+        </article>
+        <article class="card">
+          <div class="card-title">{{ t('about_value_2_title') }}</div>
+          <div class="card-desc">{{ t('about_value_2_body') }}</div>
+        </article>
+        <article class="card">
+          <div class="card-title">{{ t('about_value_3_title') }}</div>
+          <div class="card-desc">{{ t('about_value_3_body') }}</div>
+        </article>
+      </div>
+    </div>
+  </section>
+{% endblock %}

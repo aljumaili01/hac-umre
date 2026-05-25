@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{{ t('admin_content') }}</h1>
+        <p class="lead">{{ t('admin_content_help') }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-ghost" href="{{ url_for('admin.dashboard') }}">{{ t('admin_dashboard') }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="form-shell">
+        <form class="form" method="post" enctype="multipart/form-data">
+          <div class="panel">
+            <div class="panel-title">{{ t('content_branding') }}</div>
+            <div class="panel-title">{{ t('site_name_title') }}</div>
+            <div class="three-col">
+              <div class="field">
+                <label class="label" for="site_name_ar">{{ t('lang_ar') }}</label>
+                <input class="control" id="site_name_ar" name="site_name_ar" value="{{ site_name_ar }}" />
+              </div>
+              <div class="field">
+                <label class="label" for="site_name_en">{{ t('lang_en') }}</label>
+                <input class="control" id="site_name_en" name="site_name_en" value="{{ site_name_en }}" />
+              </div>
+              <div class="field">
+                <label class="label" for="site_name_ku">{{ t('lang_ku') }}</label>
+                <input class="control" id="site_name_ku" name="site_name_ku" value="{{ site_name_ku }}" />
+              </div>
+            </div>
+            <div class="two-col">
+              <div>
+                <div class="panel-title">{{ t('current_logo') }}</div>
+                <img class="settings-logo" src="{{ url_for('static', filename='uploads/' + current_logo_filename) }}" alt="Logo" />
+              </div>
+              <div>
+                <div class="panel-title">{{ t('upload_new_logo') }}</div>
+                <div class="field">
+                  <label class="label" for="logo">{{ t('logo_file') }}</label>
+                  <input class="control" id="logo" type="file" name="logo" accept="image/*" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">{{ t('content_home_texts') }}</div>
+            <div class="muted">{{ t('content_home_texts_help') }}</div>
+            <div class="form-grid">
+              {% for key in home_keys %}
+                {% set row = content_map.get(key) %}
+                <div class="field span-2">
+                  <div class="label">{{ t('content_key_' ~ key) }}</div>
+                  <div class="three-col">
+                    <div class="field">
+                      <label class="label" for="content__{{ key }}__ar">{{ t('lang_ar') }}</label>
+                      <textarea class="control" id="content__{{ key }}__ar" name="content__{{ key }}__ar" rows="2">{{ row.value_ar if row else '' }}</textarea>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="content__{{ key }}__en">{{ t('lang_en') }}</label>
+                      <textarea class="control" id="content__{{ key }}__en" name="content__{{ key }}__en" rows="2">{{ row.value_en if row else '' }}</textarea>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="content__{{ key }}__ku">{{ t('lang_ku') }}</label>
+                      <textarea class="control" id="content__{{ key }}__ku" name="content__{{ key }}__ku" rows="2">{{ row.value_ku if row else '' }}</textarea>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">{{ t('content_contact_info') }}</div>
+            <div class="form-grid">
+              {% for key in contact_keys %}
+                <div class="field span-2">
+                  <label class="label" for="{{ key }}">{{ t('platform_' ~ key) }}</label>
+                  <input class="control" id="{{ key }}" name="{{ key }}" value="{{ values.get(key, '') }}" />
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">{{ t('content_social_links') }}</div>
+            <div class="form-grid">
+              {% for key in social_keys %}
+                <div class="field span-2">
+                  <label class="label" for="{{ key }}">{{ t('platform_' ~ key) }}</label>
+                  <input class="control" id="{{ key }}" name="{{ key }}" value="{{ values.get(key, '') }}" />
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{{ t('save_changes') }}</button>
+            <a class="btn btn-ghost" href="{{ url_for('admin.dashboard') }}">{{ t('admin_dashboard') }}</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-shell spacer-top">
+        <div class="table-head">
+          <div class="h3">{{ t('content_news_title') }}</div>
+          <a class="btn btn-primary" href="{{ url_for('admin.article_new') }}">{{ t('content_news_add') }}</a>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>{{ t('field_title_en') }}</th>
+              <th>{{ t('table_created') }}</th>
+              <th>{{ t('table_actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in articles %}
+              <tr>
+                <td>#{{ a.id }}</td>
+                <td>{{ a.title_en }}</td>
+                <td>{{ a.created_at.strftime("%Y-%m-%d") }}</td>
+                <td class="actions">
+                  <a class="link" href="{{ url_for('admin.article_edit', article_id=a.id) }}">{{ t('content_news_edit') }}</a>
+                  <form method="post" action="{{ url_for('admin.article_delete', article_id=a.id) }}" class="inline" onsubmit="return confirm('{{ t('confirm_delete') }}');">
+                    <button class="link danger" type="submit">{{ t('content_news_delete') }}</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}

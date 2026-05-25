@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{% if mode == 'new' %}{{ t('content_news_add') }}{% else %}{{ t('content_news_edit') }}{% endif %}</h1>
+        <p class="lead">{{ t('content_news_help') }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-ghost" href="{{ url_for('admin.content_management') }}">{{ t('admin_content') }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="form-shell">
+        <form class="form" method="post">
+          <div class="form-grid">
+            <div class="field span-2">
+              <label class="label" for="image_url">{{ t('field_image_url') }}</label>
+              <input class="control" id="image_url" name="image_url" value="{{ article.image_url if article else '' }}" />
+            </div>
+
+            <div class="field">
+              <label class="label" for="title_ar">{{ t('field_title_ar') }}</label>
+              <input class="control" id="title_ar" name="title_ar" required value="{{ article.title_ar if article else '' }}" />
+            </div>
+            <div class="field">
+              <label class="label" for="title_en">{{ t('field_title_en') }}</label>
+              <input class="control" id="title_en" name="title_en" required value="{{ article.title_en if article else '' }}" />
+            </div>
+            <div class="field">
+              <label class="label" for="title_ku">{{ t('field_title_ku') }}</label>
+              <input class="control" id="title_ku" name="title_ku" required value="{{ article.title_ku if article else '' }}" />
+            </div>
+
+            <div class="field span-2">
+              <label class="label" for="content_ar">{{ t('field_content_ar') }}</label>
+              <textarea class="control" id="content_ar" name="content_ar" rows="5" required>{{ article.content_ar if article else '' }}</textarea>
+            </div>
+            <div class="field span-2">
+              <label class="label" for="content_en">{{ t('field_content_en') }}</label>
+              <textarea class="control" id="content_en" name="content_en" rows="5" required>{{ article.content_en if article else '' }}</textarea>
+            </div>
+            <div class="field span-2">
+              <label class="label" for="content_ku">{{ t('field_content_ku') }}</label>
+              <textarea class="control" id="content_ku" name="content_ku" rows="5" required>{{ article.content_ku if article else '' }}</textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{{ t('save_changes') }}</button>
+            <a class="btn btn-ghost" href="{{ url_for('admin.content_management') }}">{{ t('admin_content') }}</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

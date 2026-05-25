@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{{ t('admin_articles') }}</h1>
+        <p class="lead">{{ t('articles_subtitle') }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-primary" href="{{ url_for('admin.article_new') }}">{{ t('article_add') }}</a>
+        <a class="btn btn-ghost" href="{{ url_for('admin.dashboard') }}">{{ t('admin_dashboard') }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="table-shell">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>{{ t('field_title_en') }}</th>
+              <th>{{ t('field_image_url') }}</th>
+              <th>{{ t('table_created') }}</th>
+              <th>{{ t('table_actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in articles %}
+              <tr>
+                <td>#{{ a.id }}</td>
+                <td>{{ a.title_en }}</td>
+                <td>{{ a.image_url }}</td>
+                <td>{{ a.created_at.strftime("%Y-%m-%d") }}</td>
+                <td class="actions">
+                  <a class="link" href="{{ url_for('admin.article_edit', article_id=a.id) }}">{{ t('article_edit') }}</a>
+                  <form method="post" action="{{ url_for('admin.article_delete', article_id=a.id) }}" class="inline" onsubmit="return confirm('{{ t('confirm_delete') }}');">
+                    <button class="link danger" type="submit">{{ t('article_delete') }}</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}

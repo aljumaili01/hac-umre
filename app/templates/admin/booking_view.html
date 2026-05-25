@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{{ t('booking_view') }} #{{ booking.id }}</h1>
+        <p class="lead">{{ booking.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-ghost" href="{{ url_for('admin.bookings_list') }}">{{ t('admin_bookings') }}</a>
+        <a class="btn btn-ghost" href="{{ url_for('admin.booking_edit', booking_id=booking.id) }}">{{ t('booking_edit') }}</a>
+        <form method="post" action="{{ url_for('admin.booking_delete', booking_id=booking.id) }}" class="inline" onsubmit="return confirm('{{ t('confirm_delete') }}');">
+          <button class="link danger" type="submit">{{ t('booking_delete') }}</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">{{ t('form_full_name') }}</div>
+          <div class="panel-value">{{ booking.full_name }}</div>
+
+          <div class="panel-title">{{ t('form_passport') }}</div>
+          <div class="panel-value">{{ booking.passport_number }}</div>
+
+          <div class="panel-title">{{ t('form_phone') }}</div>
+          <div class="panel-value">{{ booking.phone }}</div>
+
+          <div class="panel-title">{{ t('form_people') }}</div>
+          <div class="panel-value">{{ booking.people_count }}</div>
+
+          <div class="panel-title">{{ t('form_package') }}</div>
+          <div class="panel-value">{{ booking.package.slug }}</div>
+
+          <div class="panel-title">{{ t('table_amount') }}</div>
+          <div class="panel-value">{{ "%.2f"|format(booking.total_amount()) }} {{ booking.package.currency }}</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">{{ t('table_status') }}</div>
+          <div class="panel-value"><span class="status status-{{ booking.normalized_status }}">{{ t('status_' ~ booking.normalized_status) }}</span></div>
+          <div class="form-actions">
+            <a class="btn btn-primary" href="{{ url_for('admin.booking_edit', booking_id=booking.id) }}">{{ t('booking_edit') }}</a>
+            <a class="btn btn-ghost" href="{{ url_for('admin.dashboard') }}">{{ t('admin_dashboard') }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

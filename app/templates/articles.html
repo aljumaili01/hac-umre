@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container">
+      <h1 class="h1">{{ t('articles_title') }}</h1>
+      <p class="lead">{{ t('articles_subtitle_public') }}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cards">
+        {% for a in articles %}
+          {% set la = a.localized(locale) %}
+          <article class="card">
+            {% if a.image_url %}
+              <img class="card-img" src="{{ a.image_url }}" alt="" />
+            {% else %}
+              <div class="card-img card-img-placeholder" aria-hidden="true"></div>
+            {% endif %}
+            <div class="card-top">
+              <div class="card-title">{{ la.title }}</div>
+            </div>
+            <div class="card-desc">
+              {{ la.content[:200] }}{% if la.content|length > 200 %}…{% endif %}
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-primary" href="{{ url_for('public.article_detail', article_id=a.id) }}">{{ t('cta_read_more') }}</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{{ t('admin_messages') }}</h1>
+        <p class="lead">{{ t('admin_messages_help') }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-ghost" href="{{ url_for('admin.dashboard') }}">{{ t('admin_dashboard') }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="table-shell">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{ t('message_sender') }}</th>
+              <th>{{ t('message_contact') }}</th>
+              <th>{{ t('table_created') }}</th>
+              <th>{{ t('message_preview') }}</th>
+              <th>{{ t('table_status') }}</th>
+              <th>{{ t('table_actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for m in messages %}
+              <tr class="{% if not m.is_read %}row-unread{% endif %}">
+                <td>
+                  <div class="strong">{{ m.full_name }}</div>
+                  <div class="muted">#{{ m.id }}</div>
+                </td>
+                <td>
+                  <div class="muted">{{ m.email }}</div>
+                  {% if m.phone %}
+                    <div class="muted">{{ m.phone }}</div>
+                  {% endif %}
+                </td>
+                <td>{{ m.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+                <td class="muted">{{ (m.message[:140] ~ ('…' if m.message|length > 140 else '')) }}</td>
+                <td>
+                  {% if m.is_read %}
+                    <span class="status status-approved">{{ t('message_read') }}</span>
+                  {% else %}
+                    <span class="status status-pending">{{ t('message_unread') }}</span>
+                  {% endif %}
+                </td>
+                <td class="actions">
+                  <form method="post" action="{{ url_for('admin.message_toggle_read', message_id=m.id) }}" class="inline">
+                    <button class="btn btn-ghost" type="submit">
+                      {% if m.is_read %}{{ t('mark_unread') }}{% else %}{{ t('mark_read') }}{% endif %}
+                    </button>
+                  </form>
+                  <form method="post" action="{{ url_for('admin.message_delete', message_id=m.id) }}" class="inline" onsubmit="return confirm('{{ t('confirm_delete') }}');">
+                    <button class="link danger" type="submit">{{ t('message_delete') }}</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container page-head-row">
+      <div>
+        <h1 class="h1">{{ t('admin_packages') }}</h1>
+        <p class="lead">{{ t('admin_packages_help') }}</p>
+      </div>
+      <div class="admin-actions">
+        <a class="btn btn-primary" href="{{ url_for('admin.package_new') }}">{{ t('pkg_add') }}</a>
+        <a class="btn btn-ghost" href="{{ url_for('admin.dashboard') }}">{{ t('admin_dashboard') }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="table-shell">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>{{ t('field_slug') }}</th>
+              <th>{{ t('field_title_en') }}</th>
+              <th>{{ t('field_price') }}</th>
+              <th>{{ t('field_active') }}</th>
+              <th>{{ t('table_created') }}</th>
+              <th>{{ t('table_actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in packages %}
+              <tr>
+                <td>#{{ p.id }}</td>
+                <td>{{ p.slug }}</td>
+                <td>{{ p.title_en }}</td>
+                <td>{{ "%.2f"|format(p.price_per_person|float) }} {{ p.currency }}</td>
+                <td>{% if p.is_active %}✓{% else %}—{% endif %}</td>
+                <td>{{ p.created_at.strftime("%Y-%m-%d") }}</td>
+                <td class="actions">
+                  <a class="link" href="{{ url_for('admin.package_edit', package_id=p.id) }}">{{ t('pkg_edit') }}</a>
+                  <form method="post" action="{{ url_for('admin.package_delete', package_id=p.id) }}" class="inline" onsubmit="return confirm('{{ t('confirm_delete') }}');">
+                    <button class="link danger" type="submit">{{ t('pkg_delete') }}</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}

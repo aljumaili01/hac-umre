@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-head">
+    <div class="container">
+      <h1 class="h1">{{ t('packages_title') }}</h1>
+      <p class="lead">{{ t('packages_subtitle') }}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cards">
+        {% for p in packages %}
+          {% set lp = p.localized(locale) %}
+          <article class="card">
+            <div class="card-top">
+              <div class="card-title">{{ lp.title }}</div>
+              <div class="pill">{{ p.duration_days }}d</div>
+            </div>
+            <div class="card-desc">{{ lp.description }}</div>
+            <div class="card-meta">
+              <div class="meta-row">
+                <div class="meta-label">{{ t('label_hotels') }}</div>
+                <div class="meta-value">{{ p.hotels }}</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-label">{{ t('field_inclusions') }}</div>
+                <div class="meta-value">{{ p.inclusions }}</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-label">{{ t('table_amount') }}</div>
+                <div class="meta-value">{{ "%.2f"|format(p.price_per_person|float) }} {{ p.currency }} / {{ t('form_people') }}</div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-primary" href="{{ url_for('public.booking', package=p.slug) }}">{{ t('cta_book_now') }}</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
