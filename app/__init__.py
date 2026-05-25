@@ -6,7 +6,6 @@ from urllib.parse import quote
 from flask import Flask, g
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.middleware.proxy_fix import ProxyFix
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -25,33 +24,14 @@ def create_app():
     instance_path = Path(app.instance_path)
     instance_path.mkdir(parents=True, exist_ok=True)
 
-    is_vercel = bool(os.environ.get("VERCEL")) or bool(os.environ.get("VERCEL_ENV"))
-    secret_key = os.environ.get("SECRET_KEY")
-    if not secret_key:
-        if is_vercel:
-            raise RuntimeError("SECRET_KEY must be set in the environment for Vercel deployments.")
-        secret_key = os.urandom(32)
-
     app.config.from_object("app.config.DefaultConfig")
     app.config.from_mapping(
         # For production: set SECRET_KEY in the environment so admin sessions stay valid across restarts.
-        SECRET_KEY=secret_key,
+        SECRET_KEY=os.environ.get("SECRET_KEY") or os.urandom(32),
         # For PostgreSQL: set DATABASE_URL=postgresql+psycopg://...
         SQLALCHEMY_DATABASE_URI=os.environ.get("DATABASE_URL")
         or f"sqlite:///{(instance_path / 'al_salat.db').as_posix()}",
     )
-
-    if is_vercel:
-        app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
-        app.config.update(
-            PREFERRED_URL_SCHEME="https",
-            SESSION_COOKIE_SECURE=True,
-            SESSION_COOKIE_HTTPONLY=True,
-            SESSION_COOKIE_SAMESITE="Lax",
-            REMEMBER_COOKIE_SECURE=True,
-            REMEMBER_COOKIE_HTTPONLY=True,
-            REMEMBER_COOKIE_SAMESITE="Lax",
-        )
 
     uploads_dir = Path("/tmp/uploads")
     uploads_dir.mkdir(parents=True, exist_ok=True)
