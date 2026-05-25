@@ -373,13 +373,13 @@ def content_management():
             filename = secure_filename(file.filename)
             ext = (Path(filename).suffix or "").lstrip(".").lower()
             allowed = set(current_app.config.get("ALLOWED_IMAGE_EXTENSIONS", set()))
-            if ext not in allowed:
+            if ext not in allowed or ext != "png":
                 flash(t("invalid_image_type"), "error")
                 return redirect(url_for("admin.content_management"))
 
             upload_dir = Path(current_app.config.get("UPLOAD_FOLDER"))
             upload_dir.mkdir(parents=True, exist_ok=True)
-            new_name = f"logo_{uuid4().hex}.{ext}"
+            new_name = "logo.png"
             target_path = upload_dir / new_name
             file.save(target_path)
 
@@ -392,7 +392,7 @@ def content_management():
             old = (cfg.logo_filename or "").strip()
             cfg.logo_filename = new_name
 
-            if old and old != "logo.svg" and old != new_name:
+            if old and old not in {"logo.svg", new_name}:
                 old_path = upload_dir / old
                 try:
                     if old_path.exists():

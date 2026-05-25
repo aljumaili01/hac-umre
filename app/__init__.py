@@ -33,7 +33,7 @@ def create_app():
         or f"sqlite:///{(instance_path / 'al_salat.db').as_posix()}",
     )
 
-    uploads_dir = Path("/tmp/uploads")
+    uploads_dir = Path(app.root_path) / "static" / "uploads"
     uploads_dir.mkdir(parents=True, exist_ok=True)
     (uploads_dir / "packages").mkdir(parents=True, exist_ok=True)
 
@@ -62,7 +62,14 @@ def create_app():
         locale = getattr(g, "locale", app.config.get("DEFAULT_LANG", "ar"))
 
         cfg = SiteConfig.query.order_by(SiteConfig.id.asc()).first()
-        logo_filename = (cfg.logo_filename if cfg else "logo.svg") or "logo.svg"
+        logo_filename = (cfg.logo_filename if cfg else "logo.png") or "logo.png"
+        try:
+            if logo_filename == "logo.svg" and (uploads_dir / "logo.png").exists():
+                logo_filename = "logo.png"
+            elif not (uploads_dir / logo_filename).exists():
+                logo_filename = "logo.png" if (uploads_dir / "logo.png").exists() else "logo.svg"
+        except Exception:
+            logo_filename = "logo.png"
         site_name = None
         if cfg:
             site_name = getattr(cfg, f"site_name_{locale}", None)

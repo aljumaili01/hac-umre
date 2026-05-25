@@ -96,6 +96,20 @@ main { flex: 1; width: 100%; }
 .brand-title { font-weight: 700; letter-spacing: -0.02em; }
 .brand-subtitle { font-size: 0.92rem; color: var(--muted); }
 
+html[lang="en"] .brand-mark,
+html[lang="ar"] .brand-mark,
+html[lang="ku"] .brand-mark {
+  width: auto;
+  height: auto;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+html[lang="en"] .brand-logo,
+html[lang="ar"] .brand-logo,
+html[lang="ku"] .brand-logo { width: 56px; height: 56px; }
+
 .nav { display: flex; gap: 14px; align-items: center; }
 .nav-link {
   font-weight: 600;
@@ -216,6 +230,21 @@ html[data-theme="light"] .theme-toggle .icon-sun { display: inline-block; }
   box-shadow: 0 10px 28px rgba(0,0,0,0.10);
 }
 .footer-logo { width: 100%; height: 100%; object-fit: contain; }
+
+html[lang="en"] .footer-mark,
+html[lang="ar"] .footer-mark,
+html[lang="ku"] .footer-mark {
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+html[lang="en"] .footer-logo,
+html[lang="ar"] .footer-logo,
+html[lang="ku"] .footer-logo { width: 56px; height: 56px; }
 .footer-title { font-weight: 1000; letter-spacing: -0.02em; }
 .footer-tagline { color: var(--muted); margin-top: 4px; }
 .footer-col { display: grid; gap: 12px; align-content: start; }

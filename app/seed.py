@@ -77,7 +77,7 @@ def seed_site_config_if_missing():
     if db.session.query(SiteConfig.id).first():
         return
     cfg = SiteConfig(
-        logo_filename="logo.svg",
+        logo_filename="logo.png",
         hero_bg_filename="hero_default.svg",
         site_name_ar="الصلاة المحمدية والصلاة الإبراهيمية",
         site_name_en="Al-Salat Al-Muhammadiya & Al-Salat Al-Ibrahimiya",
