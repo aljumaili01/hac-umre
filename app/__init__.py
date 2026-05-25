@@ -33,7 +33,7 @@ def create_app():
         or f"sqlite:///{(instance_path / 'al_salat.db').as_posix()}",
     )
 
-    uploads_dir = Path(app.root_path) / "static" / "uploads"
+    uploads_dir = Path("/tmp/uploads")
     uploads_dir.mkdir(parents=True, exist_ok=True)
     (uploads_dir / "packages").mkdir(parents=True, exist_ok=True)
 
