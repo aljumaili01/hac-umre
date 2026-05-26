@@ -78,6 +78,11 @@ def create_app():
                 logo_filename = "logo.png" if (uploads_dir / "logo.png").exists() else "logo.svg"
         except Exception:
             logo_filename = "logo.png"
+        logo_version = date.today().toordinal()
+        try:
+            logo_version = int((uploads_dir / logo_filename).stat().st_mtime)
+        except Exception:
+            logo_version = date.today().toordinal()
         site_name = None
         if cfg:
             site_name = getattr(cfg, f"site_name_{locale}", None)
@@ -114,6 +119,7 @@ def create_app():
         return {
             "social_links": links,
             "current_logo_filename": logo_filename,
+            "current_logo_version": logo_version,
             "current_site_name": current_site_name,
             "whatsapp_support_url": whatsapp_support_url,
             "company_contact": company_contact,

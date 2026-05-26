@@ -36,7 +36,7 @@
             <div class="two-col">
               <div>
                 <div class="panel-title">{{ t('current_logo') }}</div>
-                <img class="settings-logo" src="{{ url_for('static', filename='uploads/' + current_logo_filename) }}" alt="Logo" />
+                <img class="settings-logo" src="{{ url_for('static', filename='uploads/' + current_logo_filename) }}?v={{ current_logo_version }}" alt="Logo" />
               </div>
               <div>
                 <div class="panel-title">{{ t('upload_new_logo') }}</div>

@@ -11,7 +11,7 @@
       <div class="container header-row">
         <a class="brand" href="{{ url_for('public.home') }}">
           <div class="brand-mark" aria-hidden="true">
-            <img class="brand-logo" src="{{ url_for('static', filename='uploads/' + (current_logo_filename or 'logo.png')) }}" alt="Logo" />
+            <img class="brand-logo" src="{{ url_for('static', filename='uploads/' + (current_logo_filename or 'logo.png')) }}?v={{ current_logo_version }}" alt="Logo" />
           </div>
           <div class="brand-text">
             <div class="brand-title">{{ current_site_name }}</div>
@@ -95,7 +95,7 @@
         <div class="footer-brand">
           <div class="footer-brand-row">
             <div class="footer-mark" aria-hidden="true">
-              <img class="footer-logo" src="{{ url_for('static', filename='uploads/' + (current_logo_filename or 'logo.png')) }}" alt="Logo" />
+              <img class="footer-logo" src="{{ url_for('static', filename='uploads/' + (current_logo_filename or 'logo.png')) }}?v={{ current_logo_version }}" alt="Logo" />
             </div>
             <div>
               <div class="footer-title">{{ current_site_name }}</div>
