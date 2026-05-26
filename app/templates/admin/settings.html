@@ -128,7 +128,7 @@
                 <td>{{ a.created_at.strftime("%Y-%m-%d") }}</td>
                 <td class="actions">
                   <a class="link" href="{{ url_for('admin.article_edit', article_id=a.id) }}">{{ t('content_news_edit') }}</a>
-                  <form method="post" action="{{ url_for('admin.article_delete', article_id=a.id) }}" class="inline" onsubmit="return confirm('{{ t('confirm_delete') }}');">
+                  <form method="post" action="{{ url_for('admin.article_delete', article_id=a.id) }}" class="inline" onsubmit="return confirm(`{{ t('confirm_delete') }}`);">
                     <button class="link danger" type="submit">{{ t('content_news_delete') }}</button>
                   </form>
                 </td>

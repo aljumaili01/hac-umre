@@ -25,10 +25,18 @@ def create_app():
     instance_path.mkdir(parents=True, exist_ok=True)
 
     app.config.from_object("app.config.DefaultConfig")
+    secret_key = os.environ.get("SECRET_KEY") or app.config.get("SECRET_KEY") or os.urandom(32)
+    cookie_secure_env = (os.environ.get("SESSION_COOKIE_SECURE") or "").strip().lower()
+    if cookie_secure_env in {"1", "true", "yes", "on"}:
+        cookie_secure = True
+    elif cookie_secure_env in {"0", "false", "no", "off"}:
+        cookie_secure = False
+    else:
+        cookie_secure = bool(app.config.get("SESSION_COOKIE_SECURE", False))
+
     app.config.from_mapping(
-        # For production: set SECRET_KEY in the environment so admin sessions stay valid across restarts.
-        SECRET_KEY=os.environ.get("SECRET_KEY") or os.urandom(32),
-        # For PostgreSQL: set DATABASE_URL=postgresql+psycopg://...
+        SECRET_KEY=secret_key,
+        SESSION_COOKIE_SECURE=cookie_secure,
         SQLALCHEMY_DATABASE_URI=os.environ.get("DATABASE_URL")
         or f"sqlite:///{(instance_path / 'al_salat.db').as_posix()}",
     )
